@@ -1,6 +1,6 @@
-# 깃 배쉬 사용법
+# Git Bash 사용법
 
-## 깃 초기 선언
+## git 초기 선언
 
 ```bash
 git init
@@ -12,6 +12,7 @@ git init
 
 ```bash
 git add 해당 파일 경로
+git add .
 ```
 
 
