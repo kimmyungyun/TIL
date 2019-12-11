@@ -46,7 +46,7 @@
 
 - 정사각행렬에 수를 대응시키는 함수의 하나
 
-  ![행렬식](./assets/행렬식.png)
+  ![행렬식](./assets/행렬식.PNG)
 
 - 행렬식이 0인 경우 역행렬이 없다
 
@@ -59,15 +59,7 @@
 - 벡터 크기의 척도
 
 - 맨해튼 놈(1차 놈)
-
-  - `∥u∥1=n∑k=1|uk|`
-
   - ![](https://latex.codecogs.com/gif.latex?\left&space;\|&space;u&space;\right&space;\|_1&space;=&space;\sum_{k=1}^{n}\left&space;|&space;u_k&space;\right&space;|)
-
-  - ```
-    
-    ```
-
 - 유클리드 놈(2차 놈)
+  - ![유클리드 놈](https://latex.codecogs.com/gif.latex?\left&space;\||&space;u&space;\right&space;\||_2&space;=&space;\sqrt{\sum_{k=1}^{n}\left&space;|&space;u_k&space;\right&space;|^2})
 
-  - 
