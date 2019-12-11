@@ -70,4 +70,41 @@
 
 - 맥시멈 놈
 
-  ![맥시멈 놈](https://latex.codecogs.com/gif.latex?\displaystyle&space;\|&space;\math{u}&space;\|_\infty&space;=&space;\max_{1\le&space;k&space;\le&space;n}&space;|u_k|)
+  ![맥시멈 놈](https://latex.codecogs.com/gif.latex?\displaystyle&space;\||&space;\math{u}&space;\||_\infty&space;=&space;\max_{1\le&space;k&space;\le&space;n}&space;|u_k|)
+
+---
+
+## 고유벡터, 고유값
+
+### 정의
+
+- A의 고유벡터 X에 행렬 A를 곱해준 것이 고유벡터 X에 일개 상수인 고유 값 람다를 곱해준 것과 같은 것을 의미
+
+![고유값](./assets/eigen_value.jpg) 출처 : https://bskyvision.com/59
+
+- 수식을 왼쪽으로 몰고 계산시, `A-람다 * 단위행렬 = 0`을 만족하는 람다
+- 
+
+### 역행렬의 고유값과 고유벡터
+
+- 역행렬의 고유값은 A의 고유값들의 역수와 같다
+- 고유벡터들은 동일하다
+
+### 페이지 랭크 알고리즘
+
+- A, B, C라는 페이지가 있다
+- 원본페이지에서 다음 페이지에 대한 링크가 있다면 다른 페이지로 이동이 가능하다
+- A -> B로 이동하면 B/A 라고 표기한다
+- `P(B/A)` 는 `B/A` 를 `A에 대한 총방문 수`로 나눈 값
+- 어떤 페이지가 일정하게 유지될 확률은 나가는 확률과 들어올 확률 질량이 같아야 한다
+- A페이지에대한 확률
+  - P(A/A)P(A) + P(A/B)P(B) + P(A/C)P(C) = P(A)
+  - A페이지에서 나오는 확률
+    - P(B/A)P(A) + P(C/A)P(A)
+  - A페이지로 들어갈 확률
+    - P(A/B)P(B) + P(A/C)P(C)
+  - A페이지에 남을 확률
+    - P(A/A)P(A)
+- A, B, C에 대해서 구하고 행렬로 나타낼 수 있다
+- 이것을 행렬로 나타내면 Ax = x 형태로 나타나고 고유값은 1이 된다
+- 
