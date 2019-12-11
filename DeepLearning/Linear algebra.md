@@ -52,14 +52,22 @@
 
 ---
 
-## 벡터의 노름
+## 벡터의 놈
 
-#### 정의
+### 정의
 
 - 벡터 크기의 척도
 
-- 맨해튼 놈(1차 놈)
-  - ![](https://latex.codecogs.com/gif.latex?\left&space;\|&space;u&space;\right&space;\|_1&space;=&space;\sum_{k=1}^{n}\left&space;|&space;u_k&space;\right&space;|)
-- 유클리드 놈(2차 놈)
-  - ![유클리드 놈](https://latex.codecogs.com/gif.latex?\left&space;\||&space;u&space;\right&space;\||_2&space;=&space;\sqrt{\sum_{k=1}^{n}\left&space;|&space;u_k&space;\right&space;|^2})
+### 놈의 종류
 
+- 맨해튼 놈(1차 놈)
+
+  ![](https://latex.codecogs.com/gif.latex?\left\||u\right\||_1=\sum_{k=1}^{n}\left|u_k\right|)
+
+- 유클리드 놈(2차 놈)
+
+  ![유클리드 놈](https://latex.codecogs.com/gif.latex?\left&space;\||&space;u&space;\right&space;\||_2&space;=&space;\sqrt{\sum_{k=1}^{n}\left&space;|&space;u_k&space;\right&space;|^2})
+
+- 맥시멈 놈
+
+  ![맥시멈 놈](https://latex.codecogs.com/gif.latex?\displaystyle&space;\|&space;\math{u}&space;\|_\infty&space;=&space;\max_{1\le&space;k&space;\le&space;n}&space;|u_k|)
