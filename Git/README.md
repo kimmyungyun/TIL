@@ -117,10 +117,79 @@ git pull origin master
 ### 협업 중 에러 발생
 
 - A라는 사람이 a 파일에 대해서 커밋을 남긴 상태로 B라는 사람이 a 라는 파일에 대해 변경하고 푸쉬했을 때 A가 a를 풀할 경우 에러가 발생
+
 - 에러를 해결 하기 위해서는 두개의 버젼 중 하나를 선택하고, 나머지는 다 지운다
+
 - 그리고 다시 애드, 커밋, 푸쉬를 하면은 머지 작업이 완료된다
-- 
+
+  
+
+<hr>
+### [GitHub 블로그](GitHub_Blog.md)
 
 <hr>
 
-### [GitHub 블로그](GitHub_Blog.md)
+## 브랜치
+
+- master가 기본 브랜치를 의미
+
+- #### 깃허브에서 추구하는 형식
+
+  - master 브랜치를 기본 베이스로 함
+
+
+
+### 브랜치 사용법
+
+- 브랜치 생성
+
+  ```bash
+  git branch 브랜치이름
+  ```
+
+- 브랜치 확인
+
+  ```bash
+  git branch
+  ```
+
+- 브랜치 바꾸는 법
+
+  ```bash
+  git checkout 브랜치이름
+  ```
+
+- 브랜치 삭제
+
+  ```bash
+  git branch -d 브랜치 이름
+  ```
+
+- 브랜치 생성 + 이름
+
+  ```bash
+  git checkout -b 브랜치이름
+  ```
+
+- 브랜치의 내용을 master 브랜치에 통합하는 방법
+
+  - 기준점에 있어야 함
+  - 그리고 기준점에서 가져오고 싶은 내용을 아래 명령어를 쳐줘야함
+
+  ```bash
+  git merge kmy 
+  ```
+
+- 브랜치 그래프로 그리기
+
+  ```bash
+  git log --oneline --graph
+  ```
+
+- 머지를 완성한 후에는 branch를 삭제해주는 것이 좋다
+
+### 깃허브에서 merge 하는 법
+
+- pull request에서 new pull request를 통해서 한다
+- pull request 이후, merge를 요청하고 merge confirm 을 누르면은 합쳐진다
+- 만약 conflict가 발생할 경우, github에서 지원하는 웹 수정화면을 통해 수정하고 merge가 가능하다
