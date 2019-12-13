@@ -124,8 +124,10 @@ git pull origin master
 
   
 
-<hr>
+---
+
 ### [GitHub 블로그](GitHub_Blog.md)
+
 
 <hr>
 
@@ -193,3 +195,14 @@ git pull origin master
 - pull request에서 new pull request를 통해서 한다
 - pull request 이후, merge를 요청하고 merge confirm 을 누르면은 합쳐진다
 - 만약 conflict가 발생할 경우, github에서 지원하는 웹 수정화면을 통해 수정하고 merge가 가능하다
+
+---
+
+### 커밋 내용과 달라진 점 확인
+
+- 이전 버젼과 달라진점을 알려준다
+- 초록색은 추가 된 것, 빨간색은 빠진 것
+
+```bash
+git diff
+```
