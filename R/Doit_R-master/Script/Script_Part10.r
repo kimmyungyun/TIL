@@ -2,21 +2,23 @@
 
 ## -------------------------------------------------------------------- ##
 # 패키지 설치
-install.packages("rJava")
-install.packages("memoise")
-install.packages("KoNLP")
-
+#install.packages("rJava")
+#install.packages("memoise")
+#install.packages("KoNLP")
+#install.packages("stringi")
 # 패키지 로드
 library(KoNLP)
 library(dplyr)
+library(Rcpp)
 
 # java 폴더 경로 설정
-Sys.setenv(JAVA_HOME="C:/Program Files/Java/jre1.8.0_111/")
+Sys.setenv(JAVA_HOME="C:/Program Files/Java/jre1.8.0_231/")
 
 useNIADic()
 
+
 # 데이터 불러오기
-txt <- readLines("hiphop.txt")
+txt <- readLines("../Data/hiphop.txt")
 head(txt)
 
 install.packages("stringr")

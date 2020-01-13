@@ -9,7 +9,7 @@ library(ggplot2)             # 시각화
 library(readxl)              # 엑셀 파일 불러오기
 
 # 데이터 불러오기
-raw_welfare <- read.spss(file = "Koweps_hpc10_2015_beta1.sav",
+raw_welfare <- read.spss(file = "../Data/Koweps_hpc10_2015_beta1.sav",
                          to.data.frame = T)
 
 # 복사본 만들기
@@ -114,6 +114,24 @@ head(age_income)
 
 ggplot(data = age_income, aes(x = age, y = mean_income)) + geom_line()
 
+### Quiz
+## [20, 60] 응답이 0, 9999 나온 데이터의 비율
+## raw_Welfare$p1002_8aq1에서 결측치는 "none"
+## 0은 no
+## 나머지는 yes로 설정한 후
+## 20살에서 60살까지의 연령대에 대해 이에 대한 빈도수를 계산
+
+doing_income <- welfare %>%
+  select(income, age) %>%
+  filter(age >= 20 & age <= 60) 
+  
+check_income <- ifelse(doing_income$income %in% c(NA, 0, 9999), "no", "yes")
+table(check_income)
+
+# Quiz income의 결측치를 0으로 평가할 때,
+# 성별 income의 평균을 비교하라라
+
+
 
 #### 09-4 ####
 
@@ -142,6 +160,37 @@ ggplot(data = ageg_income, aes(x = ageg, y = mean_income)) +
   geom_col() +
   scale_x_discrete(limits = c("young", "middle", "old"))
 
+#Quiz
+# 20대, 30대, 40대, 50대, 60대 이상으로 분류해보시오.
+# 10대는 제거
+welfare <- welfare %>% 
+  mutate(ageg2 = ifelse(age>=60, "60",
+                       ifelse(age>=50, "50",
+                              ifelse(age>=40, "40",
+                                     ifelse(age>=30, "30",
+                                            ifelse(age>=20, "20", NA))))))
+welfare$age10 <- (welfare$age %/% 10) * 10
+table(welfare$age10)
+welfare$age10 <- ifelse(welfare$age10 >= 60, 60, welfare$age10)
+
+welfare %>% filter(!is.na(income)) %>%
+  group_by(age10) %>%
+  summarise(mean_income = mean(income))
+
+grade_income <- welfare %>%
+  group_by(ageg2) %>%
+  summarise(grade_income = mean(income, na.rm = T))
+  
+ggplot(data = grade_income, aes(x = ageg2, y = grade_income)) + geom_col()
+
+### 나이 및 성별 월급 차이 분석하기
+### 나이 및 성별 월급 평균표를 작성하여 그래프로 표현해보자
+
+welfare_color <- welfare %>% filter(!is.na(income)) %>% #income의 비 결측치를 필터링
+  group_by(sex, age) %>% #age, sex로 그룹화
+  summarise(mean_income = mean(income)) # income에 대하여 평균을 구하여 생성
+
+ggplot(data = welfare_color, aes(x= age, y = mean_income), color = sex) + geom_line()
 
 #### 09-5 ####
 
@@ -182,11 +231,14 @@ class(welfare$code_job)
 table(welfare$code_job)
 
 library(readxl)
-list_job <- read_excel("Koweps_Codebook.xlsx", col_names = T, sheet = 2)
+list_job <- read_excel("../Data/Koweps_Codebook.xlsx", col_names = T, sheet = 2)
 head(list_job)
 dim(list_job)
 
 welfare <- left_join(welfare, list_job, id = "code_job")
+
+table(welfare$code_job, useNA="ifany") # 각 값에 대한 갯수 측정
+table(is.na(welfare$code_job), useNA="ifany")
 
 welfare %>%
   filter(!is.na(code_job)) %>%
@@ -241,6 +293,7 @@ job_male <- welfare %>%
 
 job_male
 
+
 # 여성 직업 빈도 상위 10개 추출
 job_female <- welfare %>%
   filter(!is.na(job) & sex == "female") %>%
@@ -261,7 +314,69 @@ ggplot(data = job_female, aes(x = reorder(job, n), y = n)) +
   geom_col() +
   coord_flip()
 
+## Quiz - 연령 등급에서 노년층을 제외하고 
+###
+## 노년층을 제외한 남성들의 직업 빈도 상위 10개 추출
+job_male_no_old <- welfare %>%
+  filter(!is.na(job) & sex == "male" & ageg != "old") %>%
+  group_by(job) %>%
+  summarise(n = n()) %>%
+  arrange(desc(n)) %>%
+  head(10)
 
+job_male_no_old
+
+job_female_no_old <- welfare %>%
+  filter(!is.na(job) & sex == "female" & ageg != "old") %>%
+  group_by(job) %>%
+  summarise(n = n()) %>%
+  arrange(desc(n)) %>%
+  head(10)
+
+job_female_no_old
+
+# 직업 빈도 상위 10개에 대한 남녀 비율
+# install.packages("tidyr")
+library(tidyr)
+job_rate <- welfare %>%
+  filter(!is.na(job)) %>%
+  group_by(job, sex) %>%
+  summarise(n = n()) %>%
+  spread(sex, n) %>%  # 피봇(long data를 wide data로 변환) 작업
+  mutate(person = female + male) %>%
+  mutate(female = female/person, male = male/person) %>%
+  arrange(desc(person)) %>%
+  head(10)
+
+job_rate
+
+#월급 상위 30개 직업에 대한 남녀 비율
+salary_rate2 <- welfare %>%
+  filter((!is.na(job))) %>%
+  group_by(job) %>%
+  summarise(mean_sal = mean(income, na.rm=T)) %>%
+  arrange(desc(mean_sal)) %>%
+  head(30)
+
+salary_rate2
+
+salary_rate <- welfare %>%
+  filter((!is.na(job)) & (!is.na(income)) &(!is.na(sex))) %>%
+  group_by(job, sex) %>%
+  summarise(n = n()) %>%
+  spread(sex, n)
+
+salary_rate$female <- ifelse(is.na(salary_rate$female), 0, salary_rate$female)
+salary_rate$male <- ifelse(is.na(salary_rate$male), 0, salary_rate$male)
+
+salary_rate <- salary_rate %>%
+  mutate(person = female + male) %>%
+  mutate(female = female/person, male = male/person)
+
+salary_rate
+
+salary_rate3 <- left_join(salary_rate2, salary_rate, id = "job")
+salary_rate3
 #### 09-8 ####
 
 ## -------------------------------------------------------------------- ##
@@ -280,7 +395,7 @@ table(welfare$marriage)
 
 # 이혼 여부 변수 만들기
 welfare$group_marriage <- ifelse(welfare$marriage == 1, "marriage",
-                          ifelse(welfare$marriage == 3, "divorce", NA))
+                                 ifelse(welfare$marriage == 3, "divorce", NA))
 
 table(welfare$group_marriage)
 table(is.na(welfare$group_marriage))
@@ -311,6 +426,9 @@ divorce <- religion_marriage %>%
 divorce
 
 ggplot(data = divorce, aes(x = religion, y = pct)) + geom_col()
+
+## 연령대 및 종교 유무에 따른 이혼율 분석
+
 
 
 ## -------------------------------------------------------------------- ##
@@ -444,3 +562,18 @@ ggplot(data = region_ageg, aes(x = region,  y = pct, fill = ageg)) +
   coord_flip() +
   scale_x_discrete(limits = order)
 
+# Quiz : 직업종별 지역분포를 작성해보자
+# 각 직업 코드를 첫 digit을 직업종으로 하자 
+# 첫 digit을 의미하는 것은 직업 코드는 01xx ~ 10xx로 하는데 01 ~10으로 바꾸자는 이야기
+# 1~10까지의 직업종에 대해 지역별 비율을 구한다
+# 7대 지역을 x축으로, 직업종의 비율을 y축으로 bar 차트를 작성한다
+welfare$code_job2 <- welfare$code_job %/% 100
+welfare$code_job2 <- factor(welfare$code_job2)
+
+region_rate <- welfare %>%
+  filter(!is.na(code_job2)) %>%
+  group_by(region)
+
+
+ggplot(data = region_rate, aes(x = region, y = code_job2, fill = code_job2, na.rm=T)) + 
+  geom_col()
