@@ -15,6 +15,7 @@ crime$state <- tolower(crime$state)
 str(crime)
 
 library(ggplot2)
+
 states_map <- map_data("state")
 str(states_map)
 

@@ -1,6 +1,7 @@
 #### 12-1 ####
 
 ## -------------------------------------------------------------------- ##
+install.packages("htmlwidgets")
 install.packages("plotly")
 library(plotly)
 
@@ -14,6 +15,9 @@ p <- ggplot(data = diamonds, aes(x = cut, fill = clarity)) +
 
 ggplotly(p)
 
+library(htmlwidgets)
+
+saveWidget(ggplotly(p), file="plotly.html")
 
 #### 12-2 ####
 

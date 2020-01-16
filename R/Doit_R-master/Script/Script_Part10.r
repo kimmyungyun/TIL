@@ -24,7 +24,10 @@ head(txt)
 install.packages("stringr")
 library(stringr)
 
-# 특수문제 제거
+# 특수문자 제거 : 숫자, _ 및 언어코드 가능한 문자를 제외한 문자
+# \w : 알파벳, 숫자, _, 유니코드(한글, 중국 간체, 일어, 영어 등등)
+# \W : 위의 것들을 제외한 것들
+# \s : ' ', \n, \f, \r, \t 를 포함
 txt <- str_replace_all(txt, "\\W", " ")
 
 
@@ -33,6 +36,7 @@ extractNoun("대한민국의 영토는 한반도와 그 부속도서로 한다")
 
 # 가사에서 명사추출
 nouns <- extractNoun(txt)
+class(nouns)
 
 # 추출한 명사 list를 문자열 벡터로 변환, 단어별 빈도표 생성
 wordcount <- table(unlist(nouns))
@@ -64,6 +68,7 @@ library(wordcloud)
 library(RColorBrewer)
 
 pal <- brewer.pal(8,"Dark2")  # Dark2 색상 목록에서 8개 색상 추출
+pal
 
 set.seed(1234)
 wordcloud(words = df_word$word,  # 단어
@@ -92,7 +97,9 @@ wordcloud(words = df_word$word,    # 단어
 
 ## -------------------------------------------------------------------- ##
 # 데이터 로드
-twitter <- read.csv("twitter.csv",
+#데이터를 저장할 때 row_name을 저장해서 열 중 'X'라는 열이 들어가 있다
+# 불필요한 열임
+twitter <- read.csv("../Data/twitter.csv",
                     header = T,
                     stringsAsFactors = F,
                     fileEncoding = "UTF-8")
