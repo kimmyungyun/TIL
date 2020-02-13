@@ -308,3 +308,5 @@ vignettes/*.pdf
 /*_files/
 
 # End of https://www.gitignore.io/api/r
+DeepLearning/예제3/data/*
+DeepLearning/예제3/mnist/*
