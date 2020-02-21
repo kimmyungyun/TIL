@@ -310,3 +310,11 @@ vignettes/*.pdf
 # End of https://www.gitignore.io/api/r
 DeepLearning/예제3/data/*
 DeepLearning/예제3/mnist/*
+*.avi
+
+computervision/opencv/example/cow_video/*
+
+DeepLearning/CNN/data/dental_image/*/*/*.jpg
+DeepLearning/NLP/*.csv
+
+DeepLearning/CNN/mnist/data/*.gz
