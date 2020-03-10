@@ -78,6 +78,23 @@ if __name__ == '__main__':
 
 ---
 
+## url_for 함수
+
+- HTML에서 사용하는 함수
+- 기본 URL뒤에 Endpoint로 매개변수를 넣어서 호출해준다
+
+```python
+{{ url_for('video_feed2', name='assets_video2')  }}
+```
+
+```python
+@app.route('/video_feed2/<string:name>')
+```
+
+- 첫번째 코드의 name은 두번째 코드의 동적 URL name 변수에 값이 들어간다
+
+
+
 ## 동적 라우트
 
 - app.route 부분의 string:name 이 url로 들어올 경우, name변수에 string형태로 저장한다라는 의미
